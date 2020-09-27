@@ -1,8 +1,6 @@
 # Traker
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/traker`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
+Traker is a *Rake task tracker for Rails applications*. When integrated, it keeps track of rake tasks that have been run and stores that information in database.
 
 ## Installation
 
@@ -16,13 +14,43 @@ And then execute:
 
     $ bundle
 
-Or install it yourself as:
-
-    $ gem install traker
-
 ## Usage
+1. Add the next snippet to your `Rakefile` after `Rails.application.load_tasks`
 
-TODO: Write usage instructions here
+```ruby
+# Rails.application.load_tasks has to be above of the code we add
+
+spec = Gem::Specification.find_by_name 'traker'
+load File.join(spec.gem_dir, 'lib', 'traker', 'override.rake')
+```
+
+2. Run generator
+
+``` ruby
+rails g traker:models migration
+```
+
+3. Run `rake db:migrate`
+4. Set `TRAKER_ENV` environment variable (see below)
+
+### Configuration file
+Traker with only care about tasks that are specified in it's configuration file `.traker.yml`. Here is the example of such a file:
+
+``` yml
+environments:
+  dev:
+    - name: traker:test1
+      notes: Some fancy description here
+    
+    - name: traker:test2
+
+  stg:
+    - name: traker:test1
+```
+Schema breakdown:
+* `environments.<key>` - the name of the environment (`TRAKER_ENV`) the task has to be run against
+* `environments.<key>.name` - the name of the rake task in namespace:name format
+* `environments.<key>.notes` - some information that might be important when the task is run (should be different from rake task's description)
 
 ## Development
 
