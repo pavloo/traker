@@ -5,6 +5,7 @@ require 'active_record'
 require 'database_cleaner'
 require 'support/database'
 require 'rake'
+require 'rails'
 require 'traker'
 
 RSpec.configure do |config|
@@ -20,9 +21,12 @@ RSpec.configure do |config|
 
   config.before(:suite) do
     DatabaseCleaner.strategy = :transaction
-    # import File.join(__dir__, 'support', 'traker.rake')
-    # import File.join(__dir__, '..', 'lib', 'traker.rake')
-    # p Rake::Task.tasks
+  end
+
+  config.before(:example) do
+    allow(::Rails).to receive(:root).and_return(File.join(__dir__, 'support'))
+    Rake.load_rakefile(File.join(__dir__, 'support', 'traker.rake'))
+    Rake.load_rakefile(File.join(__dir__, '..', 'lib', 'traker', 'override.rake'))
   end
 
   config.around(:each) do |example|

@@ -6,7 +6,6 @@ RSpec.describe Traker do
   end
 
   it 'does something useful' do
-    p Rake::Task.tasks
     Rake::Task['traker:rake_success'].invoke
   end
 end
