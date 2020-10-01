@@ -2,7 +2,7 @@
 
 require 'active_record'
 
-ActiveRecord::Migration.verbose = false
+ActiveRecord::Migration.verbose = true
 ActiveRecord::Base.logger = nil
 ActiveRecord::Base.establish_connection(
   adapter: 'sqlite3',
@@ -10,5 +10,7 @@ ActiveRecord::Base.establish_connection(
 )
 
 ActiveRecord::Schema.define do
-  ActiveRecord::Migration.migrate(File.join(__FILE__, '..', '..', 'lib', 'generators', 'traker', 'templates', 'migrations'))
+  ActiveRecord::MigrationContext.new(
+    File.join(__dir__, '..', '..', 'lib', 'generators', 'traker', 'templates', 'migrations')
+  ).migrate
 end

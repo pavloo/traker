@@ -4,7 +4,7 @@ require 'yaml'
 
 module Traker
   class Instrumenter
-    attr_accessor :tasks, :desc, :task
+    attr_accessor :tasks
 
     def initialize(tasks)
       @tasks = tasks

@@ -50,6 +50,7 @@ GEM
     arel (9.0.0)
     ast (2.4.1)
     builder (3.2.4)
+    climate_control (0.2.0)
     coderay (1.1.3)
     concurrent-ruby (1.1.7)
     crass (1.0.6)
@@ -161,6 +162,7 @@ PLATFORMS
 DEPENDENCIES
   activerecord (>= 4.1)
   bundler (~> 2.0)
+  climate_control
   database_cleaner
   pry
   rails (~> 5.0)

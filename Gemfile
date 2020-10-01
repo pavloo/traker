@@ -10,4 +10,5 @@ group :test do
   gem 'rspec'
   gem 'rubocop', '~> 0.62'
   gem 'sqlite3', '~> 1.3', '< 1.4'
+  gem 'climate_control'
 end

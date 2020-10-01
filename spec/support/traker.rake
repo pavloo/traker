@@ -1,6 +1,10 @@
 # frozen_string_literal: true
 
 namespace :traker do
+  # stubbed version of Rails's "environment" task
+  task :environment do
+  end
+
   desc 'successful task'
   task :rake_success do
     puts 'Victory.'

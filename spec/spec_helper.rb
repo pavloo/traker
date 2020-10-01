@@ -6,6 +6,7 @@ require 'database_cleaner'
 require 'support/database'
 require 'rake'
 require 'rails'
+require 'climate_control'
 require 'traker'
 
 RSpec.configure do |config|
@@ -25,8 +26,6 @@ RSpec.configure do |config|
 
   config.before(:example) do
     allow(::Rails).to receive(:root).and_return(File.join(__dir__, 'support'))
-    Rake.load_rakefile(File.join(__dir__, 'support', 'traker.rake'))
-    Rake.load_rakefile(File.join(__dir__, '..', 'lib', 'traker', 'override.rake'))
   end
 
   config.around(:each) do |example|
@@ -36,4 +35,17 @@ RSpec.configure do |config|
       example.run
     end
   end
+end
+
+def with_modified_env(options, &block)
+  ClimateControl.modify(options, &block)
+end
+
+def instrument_rake_tasks!
+  Rake::Task.tasks.each do |task|
+    name = task.name
+    Rake.application.instance_variable_get('@tasks').delete(name)
+  end
+  Rake.load_rakefile(File.join(__dir__, 'support', 'traker.rake'))
+  Rake.load_rakefile(File.join(__dir__, '..', 'lib', 'traker', 'override.rake'))
 end
