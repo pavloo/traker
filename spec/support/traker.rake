@@ -16,7 +16,7 @@ namespace :traker do
   end
 
   desc 'ignored task'
-  task :rake_ingore do
-    rake 'This is never run.'
+  task :rake_ignore do
+    puts 'This task is just run and not support to be logged by Traker'
   end
 end

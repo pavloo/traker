@@ -24,7 +24,7 @@ RSpec.configure do |config|
     DatabaseCleaner.strategy = :transaction
   end
 
-  config.before(:example) do
+  config.before(:each) do
     allow(::Rails).to receive(:root).and_return(File.join(__dir__, 'support'))
   end
 
