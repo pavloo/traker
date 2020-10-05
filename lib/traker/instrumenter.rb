@@ -3,8 +3,10 @@
 require 'yaml'
 
 module Traker
+  # Wraps array of rake tasks, and auguments each one of them
+  # with Traker features
   class Instrumenter
-    attr_accessor :tasks, :desc, :task
+    attr_accessor :tasks
 
     def initialize(tasks)
       @tasks = tasks
@@ -24,7 +26,7 @@ module Traker
 
           begin
             block.call
-          rescue => e
+          rescue StandardError => e
             record.is_success = false
             record.error = e.backtrace.first
             raise e

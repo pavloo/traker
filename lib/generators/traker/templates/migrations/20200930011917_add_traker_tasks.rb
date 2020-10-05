@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+# ActiveRecord migration that creates Traker::Task
+# table
 class AddTrakerTasks < ActiveRecord::Migration[5.2]
   def change
     create_table :traker_tasks do |t|
@@ -12,6 +14,6 @@ class AddTrakerTasks < ActiveRecord::Migration[5.2]
       t.datetime :finished_at, null: false
     end
 
-    add_index :traker_tasks, %i(name environment)
+    add_index :traker_tasks, %i[name environment]
   end
 end

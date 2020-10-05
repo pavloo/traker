@@ -1,0 +1,4 @@
+environments:
+  dev:
+    - name: traker:rake_success
+    - name: traker:rake_failure
