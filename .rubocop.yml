@@ -1,0 +1,41 @@
+AllCops:
+  NewCops: enable
+  TargetRubyVersion: 2.4.0
+
+Layout/MultilineMethodCallIndentation:
+  Enabled: false
+
+Lint/InheritException:
+  Enabled: false
+
+Style/MultilineTernaryOperator:
+  Enabled: false
+
+Style/GuardClause:
+  Enabled: false
+
+Style/ClassAndModuleChildren:
+  Enabled: false
+
+Style/ParallelAssignment:
+  Enabled: false
+
+Style/IfUnlessModifier:
+  Enabled: false
+
+Metrics:
+  Enabled: false
+
+Naming/PredicateName:
+  Enabled: false
+
+Layout/LineLength:
+  Max: 170
+
+Layout/EmptyLineBetweenDefs:
+  Enabled: false
+
+Style/Documentation:
+  Enabled: true
+  Exclude:
+    - lib/traker.rb
