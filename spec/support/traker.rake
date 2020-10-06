@@ -11,6 +11,11 @@ namespace :traker do
   end
 
   desc 'failing task'
+  task :rake_success1 do
+    puts 'Success.'
+  end
+
+  desc 'failing task'
   task :rake_fail do
     raise 'Failure.'
   end

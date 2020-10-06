@@ -6,30 +6,30 @@ require 'optparse'
 options = {}
 
 subtext = <<HELP
-Possible commands are:
-   list:  lists rake tasks known to Traker (shows list of pending tasks by default)
-See 'traker COMMAND --help' for more information on a specific command.
+  Possible commands are:
+     list:  lists rake tasks known to Traker (shows list of pending tasks by default)
+  See 'traker COMMAND --help' for more information on a specific command.
 HELP
 
 global = OptionParser.new do |opts|
-  opts.banner = "Usage: traker [options] [subcommand] [options]"
-  # opts.on("-v", "--[no-]verbose", "Run verbosely") do |v|
+  opts.banner = 'Usage: traker [options] [subcommand] [options]'
+  # opts.on('-v', '--[no-]verbose', 'Run verbosely') do |v|
   #   options[:verbose] = v
   # end
-  opts.separator ""
+  opts.separator ''
   opts.separator subtext
 end
 
 subcommands = {
   'list' => OptionParser.new do |opts|
-      opts.banner = "Usage: list [options]"
-      opts.on("-a", "--all", "list all tasks") do |v|
-        options[:force] = v
-      end
-  end,
+    opts.banner = 'Usage: list [options]'
+    opts.on('-a', '--all', 'list all tasks') do |v|
+      options[:force] = v
+    end
+  end
   # 'some_other' => OptionParser.new do |opts|
-  #     opts.banner = "Usage: list [options]"
-  #     opts.on("-a", "--all", "list all the tasks") do |v|
+  #     opts.banner = 'Usage: list [options]'
+  #     opts.on('-a', '--all', 'list all the tasks') do |v|
   #       options[:force] = v
   #     end
   # end,
@@ -41,5 +41,5 @@ subcommands[command]&.order!
 
 puts "Command: #{command} "
 p options
-puts "ARGV:"
+puts 'ARGV:'
 p ARGV

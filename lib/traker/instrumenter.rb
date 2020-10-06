@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'yaml'
+require 'traker/configuration'
 
 module Traker
   # Wraps array of rake tasks, and auguments each one of them
@@ -10,6 +10,7 @@ module Traker
 
     def initialize(tasks)
       @tasks = tasks
+      @config = Configuration.new
     end
 
     def instrument
@@ -19,7 +20,7 @@ module Traker
         next unless tasks_to_be_run.map { |task| task['name'] }.include?(task_name)
 
         handler = proc do |&block|
-          record = Traker::Task.find_or_initialize_by(name: task_name, environment: env)
+          record = Traker::Task.find_or_initialize_by(name: task_name, environment: @config.env)
 
           record.started_at = DateTime.now
           record.is_success = true
@@ -43,16 +44,8 @@ module Traker
 
     private
 
-    def config
-      @config ||= YAML.safe_load(File.read(File.join(Rails.root, '.traker.yml')))
-    end
-
-    def env
-      @env ||= ENV.fetch('TRAKER_ENV', 'default')
-    end
-
     def tasks_to_be_run
-      config['environments'][env] || []
+      @config.tasks
     end
   end
 end
