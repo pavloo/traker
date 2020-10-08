@@ -52,6 +52,14 @@ Schema breakdown:
 * `environments.<key>.name` - the name of the rake task in namespace:name format
 * `environments.<key>.notes` - some information that might be important when the task is run (should be different from rake task's description)
 
+### Testing
+
+Traker allows to keep your `.traker.yml` configuration file consistent and valid. Run a generator to install rspec related files:
+
+``` ruby
+rails g traker:rspec test
+```
+
 ## Development
 
 After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
