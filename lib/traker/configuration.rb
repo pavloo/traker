@@ -8,7 +8,7 @@ module Traker
     attr_accessor :config, :env
 
     def initialize
-      @config = YAML.safe_load(File.read(Rails.root.join('.traker.yml')))
+      @config = YAML.safe_load(File.open(::Rails.root.join('.traker.yml')))
       @env = ENV.fetch('TRAKER_ENV', 'default')
     end
 

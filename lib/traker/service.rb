@@ -11,7 +11,6 @@ module Traker
     end
 
     def pending_tasks
-      tasks = @config.tasks.map { |t| t['name'] }
       records = Traker::Task.where(name: tasks, environment: @config.env)
       actual = tasks.each_with_object({}) do |name, hash|
         record = records.find { |r| r.name == name }
@@ -27,6 +26,10 @@ module Traker
       end
 
       pending
+    end
+
+    def tasks
+      @tasks ||= @config.tasks.map { |t| t['name'] }
     end
   end
 end

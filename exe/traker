@@ -1,9 +1,12 @@
 #!/usr/bin/env ruby
+
 # frozen_string_literal: true
 
+require File.expand_path(File.join(Dir.pwd, 'config/environment'))
 require 'optparse'
+require 'traker'
 
-options = {}
+# options = {}
 
 subtext = <<HELP
   Possible commands are:
@@ -20,26 +23,31 @@ global = OptionParser.new do |opts|
   opts.separator subtext
 end
 
+SUBCOMMANDS = {
+  list: 'list'
+}.freeze
+
+subcommand_options = {}
 subcommands = {
-  'list' => OptionParser.new do |opts|
+  SUBCOMMANDS[:list] => OptionParser.new do |opts|
     opts.banner = 'Usage: list [options]'
     opts.on('-a', '--all', 'list all tasks') do |v|
-      options[:force] = v
+      subcommand_options[:all] = v
     end
   end
-  # 'some_other' => OptionParser.new do |opts|
-  #     opts.banner = 'Usage: list [options]'
-  #     opts.on('-a', '--all', 'list all the tasks') do |v|
-  #       options[:force] = v
-  #     end
-  # end,
 }
 
 global.order!
-command = ARGV.shift
-subcommands[command]&.order!
+subcommand = ARGV.shift
+subcommands[subcommand]&.order!
 
-puts "Command: #{command} "
-p options
-puts 'ARGV:'
-p ARGV
+service = Traker::Service.new
+
+case subcommand
+when SUBCOMMANDS[:list]
+  if subcommand_options[:all]
+    print service.tasks.join("\n")
+  else
+    print service.pending_tasks.join("\n")
+  end
+end
