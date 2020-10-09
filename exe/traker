@@ -6,19 +6,18 @@ require File.expand_path(File.join(Dir.pwd, 'config/environment'))
 require 'optparse'
 require 'traker'
 
-# options = {}
-
 subtext = <<HELP
   Possible commands are:
      list:  lists rake tasks known to Traker (shows list of pending tasks by default)
   See 'traker COMMAND --help' for more information on a specific command.
 HELP
 
+options = {}
 global = OptionParser.new do |opts|
   opts.banner = 'Usage: traker [options] [subcommand] [options]'
-  # opts.on('-v', '--[no-]verbose', 'Run verbosely') do |v|
-  #   options[:verbose] = v
-  # end
+  opts.on('-v', '--version', 'Run verbosely') do |v|
+    options[:version] = v
+  end
   opts.separator ''
   opts.separator subtext
 end
@@ -38,6 +37,11 @@ subcommands = {
 }
 
 global.order!
+if options[:version]
+  puts Traker::VERSION
+  exit
+end
+
 subcommand = ARGV.shift
 subcommands[subcommand]&.order!
 

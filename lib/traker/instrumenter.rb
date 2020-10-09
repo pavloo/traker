@@ -25,12 +25,12 @@ module Traker
 
           begin
             block.call
+            record.run_count += 1
           rescue StandardError => e
             record.is_success = false
             record.error = e.backtrace.first
             raise e
           ensure
-            record.run_count += 1
             record.finished_at = DateTime.now
             record.save!
           end

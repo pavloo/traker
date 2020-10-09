@@ -31,7 +31,7 @@ module Traker
       available_task_names = available_tasks.map(&:name)
 
       @environments.each do |_, tasks|
-        task_names = tasks.map { |t| t['name'] }
+        task_names = (tasks || []).map { |t| t['name'] }
         invalid_tasks = task_names - available_task_names
 
         if invalid_tasks.any?
