@@ -1,13 +1,12 @@
 # frozen_string_literal: true
 
-require 'traker/configuration'
 require 'traker/task'
 
 module Traker
   # Service that incapsulates main Traker API
   class Service
     def initialize
-      @config = Configuration.new
+      @config = Traker::Config.load
     end
 
     def pending_tasks

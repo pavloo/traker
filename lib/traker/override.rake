@@ -2,8 +2,6 @@
 
 require_relative '../traker'
 
-Traker::Instrumenter.new(Rake::Task.tasks)
-
 Traker::Instrumenter.new(Rake::Task.tasks).instrument do |task_name, handle_task|
   original_task = Rake.application.instance_variable_get('@tasks').delete(task_name)
   task_prerequisites = original_task.prerequisites | ['environment']
