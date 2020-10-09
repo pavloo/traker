@@ -10,7 +10,7 @@ namespace :traker do
     puts 'Victory.'
   end
 
-  desc 'failing task'
+  desc 'another successful task'
   task :rake_success1 do
     puts 'Success.'
   end

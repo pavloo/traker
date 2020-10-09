@@ -3,7 +3,7 @@
 require 'traker/task'
 
 module Traker
-  # Service that incapsulates main Traker API
+  # Service that encapsulates main Traker API
   class Service
     def initialize
       @config = Traker::Config.load

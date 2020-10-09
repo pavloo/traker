@@ -13,42 +13,38 @@ HELP
     }.freeze
 
     def initialize
-      @options = {}
-      @global = OptionParser.new do |opts|
+      @main = OptionParser.new do |opts|
         opts.banner = 'Usage: traker [options] [subcommand] [options]'
-        opts.on('-v', '--version', 'Run verbosely') do |v|
-          @options[:version] = v
-        end
+        opts.on('-v', '--version', 'Run verbosely')
         opts.separator ''
         opts.separator SUBTEXT
       end
 
-      @subcommand_options = {}
       @subcommands = {
         SUBCOMMANDS[:list] => OptionParser.new do |opts|
           opts.banner = 'Usage: list [options]'
-          opts.on('-a', '--all', 'list all tasks') do |v|
-            @subcommand_options[:all] = v
-          end
+          opts.on('-a', '--all', 'list all tasks')
         end
       }
     end
 
     def run(argv)
-      @global.order!(argv)
-      if @options[:version]
+      options = {}
+      @main.order!(argv, into: options)
+      if options[:version]
         puts Traker::VERSION
         return
       end
 
       subcommand = argv.shift
-      @subcommands[subcommand]&.order!(argv)
+      subcommand_options = {}
+      @subcommands[subcommand]&.order!(argv, into: subcommand_options)
 
       service = Traker::Service.new
 
       case subcommand
       when SUBCOMMANDS[:list]
-        if @subcommand_options[:all]
+        if subcommand_options[:all]
           print service.tasks.join("\n")
         else
           print service.pending_tasks.join("\n")
