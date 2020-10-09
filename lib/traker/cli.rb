@@ -28,21 +28,21 @@ HELP
         SUBCOMMANDS[:list] => OptionParser.new do |opts|
           opts.banner = 'Usage: list [options]'
           opts.on('-a', '--all', 'list all tasks') do |v|
-            subcommand_options[:all] = v
+            @subcommand_options[:all] = v
           end
         end
       }
     end
 
     def run(argv)
-      @global.order!
+      @global.order!(argv)
       if @options[:version]
         puts Traker::VERSION
-        exit
+        return
       end
 
       subcommand = argv.shift
-      @subcommands[subcommand]&.order!
+      @subcommands[subcommand]&.order!(argv)
 
       service = Traker::Service.new
 
