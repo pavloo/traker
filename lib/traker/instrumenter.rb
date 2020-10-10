@@ -15,7 +15,7 @@ module Traker
       tasks.each do |t|
         task_name = t.name
 
-        next unless config.tasks_to_be_run.map { |task| task['name'] }.include?(task_name)
+        next unless tasks_to_be_run.map { |task| task['name'] }.include?(task_name)
 
         handler = proc do |&block|
           record = Traker::Task.find_or_initialize_by(name: task_name, environment: config.env)
@@ -25,12 +25,12 @@ module Traker
 
           begin
             block.call
+            record.run_count += 1
           rescue StandardError => e
             record.is_success = false
             record.error = e.backtrace.first
             raise e
           ensure
-            record.run_count += 1
             record.finished_at = DateTime.now
             record.save!
           end
@@ -38,6 +38,12 @@ module Traker
 
         yield task_name, handler
       end
+    end
+
+    private
+
+    def tasks_to_be_run
+      config.tasks
     end
   end
 end

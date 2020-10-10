@@ -10,6 +10,11 @@ namespace :traker do
     puts 'Victory.'
   end
 
+  desc 'another successful task'
+  task :rake_success1 do
+    puts 'Success.'
+  end
+
   desc 'failing task'
   task :rake_fail do
     raise 'Failure.'
@@ -17,6 +22,6 @@ namespace :traker do
 
   desc 'ignored task'
   task :rake_ignore do
-    puts 'This task is just run and not support to be logged by Traker'
+    puts 'This task is just run and not support to be logged by Traker.'
   end
 end

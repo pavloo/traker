@@ -25,7 +25,7 @@ RSpec.configure do |config|
   end
 
   config.before(:each) do
-    allow(::Rails).to receive(:root).and_return(File.join(__dir__, 'support'))
+    allow(::Rails).to receive(:root).and_return(Pathname.new(File.join(__dir__, 'support')))
   end
 
   config.around(:each) do |example|

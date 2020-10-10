@@ -1,4 +1,11 @@
 environments:
   dev:
     - name: traker:rake_success
-    - name: traker:rake_failure
+    - name: traker:rake_fail
+  default:
+    - name: traker:rake_success
+    - name: traker:rake_success1
+  stg:
+    - name: traker:rake_success
+    - name: traker:rake_success
+    - name: traker:rake_success1
