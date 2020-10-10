@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'optparse'
+
 module Traker
   # Traker's CLI interfase
   class CLI
@@ -15,7 +17,7 @@ HELP
     def initialize
       @main = OptionParser.new do |opts|
         opts.banner = 'Usage: traker [options] [subcommand] [options]'
-        opts.on('-v', '--version', 'Run verbosely')
+        opts.on('-v', '--version', 'Show version')
         opts.separator ''
         opts.separator SUBTEXT
       end
