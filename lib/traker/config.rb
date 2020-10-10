@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'yaml'
+require 'rails'
 
 module Traker
   # Represents Traker configuration.
@@ -11,7 +12,7 @@ module Traker
     end
 
     def self.load
-      Config.new(File.join(Rails.root, PATH))
+      Config.new(File.join(::Rails.root, PATH))
     end
 
     def initialize(file)
