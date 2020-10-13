@@ -60,6 +60,12 @@ Traker allows to keep your `.traker.yml` configuration file consistent and valid
 rails g traker:rspec test
 ```
 
+### CLI
+Traker exposes a command line interface. Commands implemented so far:
+
+1) `traker list` - lists pending (those that haven't been run in the current environment) tasks. Available options: 
+* `-a, --all` - list all tasks in the current environment
+
 ## Development
 
 After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
