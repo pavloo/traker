@@ -9,7 +9,7 @@ RSpec.describe Traker::Config do
 
   describe '#initialize' do
     it 'does not fail if config has incorrect syntax' do
-      expect { Traker::Config.new("./spec/support/.invalid_traker.yml") }
+      expect { Traker::Config.new('./spec/support/.invalid_traker.yml') }
         .not_to raise_error
     end
   end
