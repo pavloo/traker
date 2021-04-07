@@ -18,6 +18,9 @@ module Traker
     def initialize(file)
       yml = YAML.safe_load(File.read(file))
       @environments = yml['environments']
+    rescue Psych::SyntaxError => e
+      puts "[TRAKER] unable to load config file: #{e}"
+      @environments = {}
     end
 
     def env

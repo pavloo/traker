@@ -7,6 +7,13 @@ RSpec.describe Traker::Config do
     it { is_expected.not_to be_blank }
   end
 
+  describe '#initialize' do
+    it 'does not fail if config has incorrect syntax' do
+      expect { Traker::Config.new('./spec/support/.invalid_traker.yml') }
+        .not_to raise_error
+    end
+  end
+
   describe '#env' do
     it 'returns default env' do
       expect(subject.env).to eq 'default'
