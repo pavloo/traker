@@ -32,15 +32,27 @@ module Traker
     end
 
     def validate!(available_tasks)
-      available_task_names = available_tasks.map(&:name)
+      available_task_names = available_tasks.map { |t| extract_task_name(t[:name]) }
 
       @environments.each do |_, tasks|
-        task_names = (tasks || []).map { |t| t['name'] }
+        task_names = (tasks || []).map { |t| extract_task_name(t['name']) }
         invalid_tasks = task_names - available_task_names
 
         if invalid_tasks.any?
           raise InvalidTasks, "#{PATH} contains invalid tasks: #{invalid_tasks.join(',')}"
         end
+      end
+    end
+
+    private
+
+    # Extracts task name without arguments
+    def extract_task_name(str)
+      matches = str.match(/^(?<name>[^\[\]]*)(?:(\[.*\])?)$/) # Task name with optional parameters
+      if matches.try(:names).blank?
+        raise InvalidTasks, "#{PATH} contains a bad formatted task: #{str}"
+      else
+        matches[:name]
       end
     end
   end

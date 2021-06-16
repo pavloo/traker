@@ -56,5 +56,24 @@ RSpec.describe Traker::Config do
       ]
       expect { subject.validate!(available_tasks) }.not_to raise_error
     end
+
+    it 'validates if tasks with parameters match' do
+      available_tasks = [
+        OpenStruct.new(name: 'traker:rake_success1[foo]'),
+        OpenStruct.new(name: 'traker:rake_success'),
+        OpenStruct.new(name: 'traker:rake_fail[foo,bar]')
+      ]
+      expect { subject.validate!(available_tasks) }.not_to raise_error
+    end
+
+    it 'raises if there is a task with bad formatted parameters' do
+      available_tasks = [
+        OpenStruct.new(name: 'traker:rake_success1[foo'),
+        OpenStruct.new(name: 'traker:rake_success'),
+        OpenStruct.new(name: 'traker:rake_fail[]')
+      ]
+      expect { subject.validate!(available_tasks) }
+        .to raise_error Traker::Config::InvalidTasks, '.traker.yml contains a bad formatted task: traker:rake_success1[foo'
+    end
   end
 end
